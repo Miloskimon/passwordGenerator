@@ -15,7 +15,7 @@ export function Passwords(){
     const [listPassword, setListPassword]= useState([])
     const focused = useIsFocused();
 
-    const {getItem} = useStorage();
+    const {getItem, deleteItem} = useStorage();
 
     useEffect(()=> {
         async function leadPassword(){
@@ -26,6 +26,12 @@ export function Passwords(){
         leadPassword();
 
     }, [focused])
+
+
+    async function handleDeletePassword(item){
+        const password = await deleteItem("@pass", item)
+        setListPassword(password);
+    }
 
 
     return(
@@ -39,7 +45,7 @@ export function Passwords(){
             style={{flex:1, padding:14, }} 
             data={listPassword} 
             keyExtractor={ (item) => String(item) } 
-            renderItem={({item}) => <PasswordsItem/> }/>
+            renderItem={({item}) => <PasswordsItem data={item} removePassword={ () => handleDeletePassword(item)} /> }/>
         </View>
         </SafeAreaView>
     );

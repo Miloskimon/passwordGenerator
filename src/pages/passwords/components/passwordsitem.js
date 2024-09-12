@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 export function PasswordsItem({data, removePassword}) {
     return (
         <Pressable onLongPress={removePassword} style={style.container}>
-            <Text>
+            <Text style={style.Text}>
                {data} 
             </Text>
         </Pressable>
@@ -25,5 +25,13 @@ const style = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+    },
+
+    Text:{
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#333',
+        textAlign: 'center',
+    
     }
 })
