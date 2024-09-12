@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import Slider from '@react-native-community/slider';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal } from 'react-native';
+
+import {Modalpassword} from './src/components/modal';
 
 let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -9,6 +11,7 @@ let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 export default function App() {
   const [size, setSize] = useState(10)
   const [passwordValue, setPasswordValue] = useState("")
+  const [modalVisible, setModalVisible] = useState(false)
 
   function generatePassword(){
     let password = "";
@@ -17,6 +20,7 @@ export default function App() {
     }
 
     setPasswordValue(password)
+    setModalVisible(true)
 
 
   }
@@ -45,6 +49,9 @@ export default function App() {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText} onPress={generatePassword}> Generate your password</Text>
       </TouchableOpacity>
+      <Modal visible={modalVisible} animationType='fade' transparent={true}> 
+        <Modalpassword password={passwordValue} handleClose={()=> setModalVisible (false)}/>
+      </Modal>
       <StatusBar style="auto" />
     </View>
   );
