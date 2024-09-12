@@ -1,11 +1,25 @@
-
+import { useState } from 'react';
 import Slider from '@react-native-community/slider';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
+let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 
 export default function App() {
+  const [size, setSize] = useState(10)
+  const [passwordValue, setPasswordValue] = useState("")
+
+  function generatePassword(){
+    let password = "";
+    for (let i = 0, n = charset.length; i < size; i++) {
+      password += charset.charAt(Math.floor(Math.random() * n));
+    }
+
+    setPasswordValue(password)
+
+
+  }
   return (
     <View style={styles.container}>
       <Image
@@ -13,7 +27,7 @@ export default function App() {
         style={styles.logo}
       />
 
-      <Text style={styles.title}> 20 caracteres</Text>
+      <Text style={styles.title}> {size} characters</Text>
 
       <View style={styles.area}> 
         <Slider
@@ -22,10 +36,15 @@ export default function App() {
           maximumValue={20}
           maximumTrackTintColor="#FFF0000"
           minimumTrackTintColor="#000"
-          thumbTintColor="#golden"
-
+          thumbTintColor="#FFD700"
+          value={size}
+          onValueChange={(value) => setSize(value.toFixed(0))}
         />
       </View>
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText} onPress={generatePassword}> Generate your password</Text>
+      </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   );
@@ -54,5 +73,27 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: "bold",
+  },
+
+  button:{
+    backgroundColor: "#FFD700",
+    width: "80%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    marginTop: 10,
+
+  },
+
+  buttonText:{
+    color: "#000",
+    fontSize: 20,
+  },  
 
 });
